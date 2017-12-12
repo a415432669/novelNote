@@ -9,6 +9,10 @@ const schema = treo.schema()
   .addStore('category', {key: 'id', increment: true})
   .addIndex('byTitle', 'title', { unique: true })
   .addIndex('byType', 'type')
+  .version(3)
+  .addStore('notes', {key: 'id', increment: true})
+  .addIndex('byContent', 'content')
+  .addIndex('byCate', 'catId')
 
 const db = treo('library', schema)
 

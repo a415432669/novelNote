@@ -3,7 +3,7 @@ import api from '@api'
 const state = {
   detail: null,
   category: {
-    index: 0,
+    id: 0,
     type: 0,
     data: []
   },
@@ -36,7 +36,10 @@ const actions = {
     category
       .index('byType')
       .get(state.category.type, (e, data) => {
-        commit('updateCategory', data)
+        if (data.length > 0) {
+          commit('updateCategory', data)
+          commit('updateCategoryId', data[0].id)
+        }
       })
   },
   addCategory ({commit, state, dispatch}, title) {
@@ -66,6 +69,9 @@ const mutations = {
   },
   updateCategory  (state, list) {
     state.category.data = list
+  },
+  updateCategoryId (state, cId) {
+    state.category.index = cId
   }
 }
 export default {

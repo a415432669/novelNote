@@ -26,13 +26,17 @@ const actions = {
       return books.put({
         title,
         date
-      }, (e, data) => {
+      }, (e, id) => {
         if (e) {
           reject(e)
           return
         }
+        commit('addBooks', {
+          id,
+          title,
+          date
+        })
         resolve()
-        commit('addBooks', data)
       })
     })
   }

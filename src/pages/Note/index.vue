@@ -8,7 +8,6 @@
   width: 100%;
   bottom: 0;
   display: flex;
-
 }
 .side{
   width: 6rem;
@@ -71,7 +70,11 @@
   <div class="content">
     <aside class="side">
       <ul>
-        <li v-for="(item, index) in category.data" :key="item.id" :class="{active: cateIndex === index}">
+        <li
+          v-for="(item, index) in category.data"
+          :key="item.id"
+          :class="{active: category.id === item.id}"
+          @click="selectCate(item.id)">
           {{item.title}}
         </li>
       </ul>
@@ -123,6 +126,11 @@ export default {
   mounted () {
     this.$store.dispatch('getDetail')
     this.$store.dispatch('getCategory')
+  },
+  methods: {
+    selectCate: function (cId) {
+      this.$store.commit('updateCategoryId', cId)
+    }
   },
   components: {
     cateAdd,
