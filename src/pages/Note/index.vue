@@ -11,10 +11,11 @@
 
 }
 .side{
-  width: 7rem;
+  width: 6rem;
   background-color: #fbf3ea;
 }
 .side li{
+  font-size: .85rem;
   padding: .45rem;
   border-bottom: 1px solid #eee;
 }
@@ -23,11 +24,36 @@
 }
 .main{
   flex: 1;
-
+  padding: .4rem;
 }
-
-.main ul{
-
+.note-item{
+  background: #fff;
+  width: 100%;
+  font: normal 14px verdana;
+  line-height: 1.5;
+  padding: .4rem .4rem;
+  font-size: .85rem;
+  border: solid 1px #ddd;
+  margin-bottom: .4rem;
+}
+.note-add .w-icon{
+  width: 1.7rem;
+  height: 1.7rem;
+  padding: .2rem;
+  background-color: #7e726f;
+  border-radius: 50%;
+  text-align: center;
+}
+.note-add .w-icon .icon{
+  fill: #666;
+  width: 1.3rem;
+  height: 1.3rem;
+  fill: #fff
+}
+.note-add{
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 </style>
@@ -51,20 +77,35 @@
       </ul>
     </aside>
     <div class="main">
+      <div class="note-item">
+        <div class="w-content">
+          测试测试测试测试测试测试测试测试测试测试测试
+        </div>
+      </div>
+      <div class="note-add" @click="editDialog=true">
+        <div class="w-icon">
+          <my-icon icon="add" ></my-icon>
+        </div>
+      </div>
     </div>
   </div>
   <note-footer></note-footer>
-   <cate-add
-      :visible.sync="cateDiologVisible"
-      @update:visible="val => visible = val">
-    </cate-add>
+  <cate-add
+    :visible.sync="cateDiologVisible"
+    @update:visible="val => visible = val">
+  </cate-add>
+  <note-edit
+    :visible.sync="editDialog"
+    @update:visible="val => visible = val">
+  </note-edit>
 </div>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 import noteFooter from './noteFooter.vue'
 import cateAdd from './cateAdd.vue'
+import noteEdit from './noteEdit.vue'
 export default {
   computed: {
     ...mapGetters({
@@ -75,7 +116,8 @@ export default {
   data () {
     return {
       cateIndex: 0,
-      cateDiologVisible: false
+      cateDiologVisible: false,
+      editDialog: false
     }
   },
   mounted () {
@@ -84,7 +126,8 @@ export default {
   },
   components: {
     cateAdd,
-    noteFooter
+    noteFooter,
+    noteEdit
   }
 }
 </script>
