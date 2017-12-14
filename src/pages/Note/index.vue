@@ -123,8 +123,11 @@ export default {
       editDialog: false
     }
   },
-  mounted () {
-    this.$store.dispatch('getDetail')
+  async mounted () {
+    const detail = await this.$store.dispatch('getDetail')
+    if (detail === undefined) {
+      this.$router.push({name: 'Home'})
+    }
     this.$store.dispatch('getCategory')
   },
   methods: {

@@ -24,12 +24,21 @@ const getters = {
 
 const actions = {
   getDetail ({commit, rootState: {route}}) {
-    const books = api.store('books')
-    const id = parseInt(route.params.id, 10)
-    books
-      .get(id, (e, data) => {
-        commit('updateDetail', data)
-      })
+    return new Promise((resolve, reject) => {
+      const books = api.store('books')
+      const id = parseInt(route.params.id, 10)
+      books
+        .get(id, (e, data) => {
+          if (e) {
+            reject(e)
+          }
+          if (data === undefined) {
+            resolve(undefined)
+          }
+          commit('updateDetail', data)
+          resolve(data)
+        })
+    })
   },
   getCategory ({commit, state}) {
     const category = api.store('category')
