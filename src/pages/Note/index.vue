@@ -61,6 +61,11 @@
 <template>
 <div class="page">
   <my-header :title="noteDetail&&noteDetail.title">
+    <div slot="left">
+      <a href="javascript:void(0)" @click="$router.back()">
+         <my-icon icon="left"></my-icon>
+      </a>
+    </div>
     <div slot="right">
       <a href="javascript:void(0)" @click="cateDiologVisible=true" >
         <my-icon icon="edit" ></my-icon>
@@ -73,19 +78,18 @@
         <li
           v-for="(item, index) in category.data"
           :key="item.id"
-          :class="{active: category.id === item.id}"
-          @click="selectCate(item.id)">
+          :class="{active: category.current.id === item.id}"
+          @click="selectCate(item)">
           {{item.title}}
         </li>
       </ul>
     </aside>
     <div class="main">
-      <div class="note-item">
-        <div class="w-content">
-          测试测试测试测试测试测试测试测试测试测试测试
+      <div class="note-item" v-for= "(item,index) in notes.data" :key="item.id">
+        <div class="w-content" v-html="htmlFormate(item.content)">
         </div>
       </div>
-      <div class="note-add" @click="editDialog=true">
+      <div class="note-add" @click="addNote" v-if="category.data.length">
         <div class="w-icon">
           <my-icon icon="add" ></my-icon>
         </div>
@@ -99,6 +103,7 @@
   </cate-add>
   <note-edit
     :visible.sync="editDialog"
+    :type="editType"
     @update:visible="val => visible = val">
   </note-edit>
 </div>
@@ -113,14 +118,16 @@ export default {
   computed: {
     ...mapGetters({
       noteDetail: 'noteDetail',
-      category: 'getCategory'
+      category: 'getCategory',
+      notes: 'getNotes'
     })
   },
   data () {
     return {
       cateIndex: 0,
       cateDiologVisible: false,
-      editDialog: false
+      editDialog: false,
+      editType: 'add'
     }
   },
   async mounted () {
@@ -131,8 +138,16 @@ export default {
     this.$store.dispatch('getCategory')
   },
   methods: {
-    selectCate: function (cId) {
-      this.$store.commit('updateCategoryId', cId)
+    selectCate (cId) {
+      this.$store.commit('updateCurrent', cId)
+      this.$store.dispatch('getNotes')
+    },
+    addNote () {
+      this.editType = 'add'
+      this.editDialog = true
+    },
+    htmlFormate (html) {
+      return html.replace(/\n/g, '<br />')
     }
   },
   components: {

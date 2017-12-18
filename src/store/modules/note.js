@@ -3,7 +3,7 @@ import api from '@api'
 const state = {
   detail: null,
   category: {
-    id: 0,
+    current: null,
     type: 0,
     data: []
   },
@@ -19,6 +19,9 @@ const getters = {
   },
   getCategory (state) {
     return state.category
+  },
+  getNotes (state) {
+    return state.note
   }
 }
 
@@ -40,14 +43,15 @@ const actions = {
         })
     })
   },
-  getCategory ({commit, state}) {
+  getCategory ({commit, state, dispatch}) {
     const category = api.store('category')
     category
       .index('byType')
       .get(state.category.type, (e, data) => {
+        commit('updateCategory', data)
         if (data.length > 0) {
-          commit('updateCategory', data)
-          commit('updateCategoryId', data[0].id)
+          commit('updateCurrent', data[0])
+          dispatch('getNotes')
         }
       })
   },
@@ -56,14 +60,45 @@ const actions = {
       const category = api.store('category')
       return category.put({
         title,
-        type: state.type
-      }, e => {
+        type: state.category.type
+      }, (e, id) => {
         if (e) {
           reject(e)
           return
         }
+        const data = {
+          id,
+          title,
+          type: state.category.type
+        }
         resolve()
-        dispatch('getCategory')
+        commit('updateCurrent', data)
+        commit('addCategory', data)
+        dispatch('getNotes')
+      })
+    })
+  },
+  getNotes ({commit, state}) {
+    const notes = api.store('notes')
+    notes
+      .index('byCate')
+      .get(state.category.current.id, (e, data) => {
+        commit('updateNotes', data)
+      })
+  },
+  addNote ({commit, state, dispatch}, content) {
+    return new Promise((resolve, reject) => {
+      const notes = api.store('notes')
+      const catId = state.category.current.id
+      notes.put({
+        catId,
+        content
+      }, (e, id) => {
+        if (e) {
+          return reject(e)
+        }
+        dispatch('getNotes')
+        resolve(id)
       })
     })
   }
@@ -76,11 +111,17 @@ const mutations = {
   updateNoteType (state, noteType) {
     state.category.type = noteType
   },
-  updateCategory  (state, list) {
+  updateCategory (state, list) {
     state.category.data = list
   },
-  updateCategoryId (state, cId) {
-    state.category.index = cId
+  addCategory  (state, data) {
+    state.category.data.push(data)
+  },
+  updateCurrent (state, data) {
+    state.category.current = data
+  },
+  updateNotes (state, data) {
+    state.note.data = data
   }
 }
 export default {

@@ -18,9 +18,9 @@
   background-color: #7d726f;
   box-shadow:0 .1rem .1rem rgba(0, 0, 0, .2);
   color: #fff;
-  padding:0 .25rem;
+  padding:0 .75rem;
 }
-.edit-header .w-left{
+.edit-header .w-left, .edit-header .w-right{
   height: 2.75rem;
   display: flex;
   align-items: center;
@@ -63,7 +63,12 @@
   <div class="note-edit" v-if="visible">
     <header class="edit-header">
       <div class="w-left" @click="close">
-        <my-icon icon="left"></my-icon> 测试
+        <my-icon icon="left"></my-icon> {{category.current&&category.current.title}}
+      </div>
+      <div class="w-right">
+        <a href="javascript:void(0)" @click="submit">
+          <my-icon icon="confirm"></my-icon>
+        </a>
       </div>
     </header>
     <div class="editor-container">
@@ -75,12 +80,26 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   props: {
     visible: {
       type: Boolean,
       required: true
+    },
+    title: {
+      type: String,
+      default: ''
+    },
+    type: {
+      type: String,
+      default: 'add'
     }
+  },
+  computed: {
+    ...mapGetters({
+      category: 'getCategory'
+    })
   },
   data () {
     return {
@@ -91,10 +110,19 @@ export default {
   },
   methods: {
     close () {
+      this.content = ''
       this.$emit('update:visible', false)
     },
     updateContent () {
       this.$refs.content.innerHTML.replace(/<br>/g, '\n')
+    },
+    async submit () {
+      if (this.type === 'add') {
+        await this.$store.dispatch('addNote', this.content)
+      } else if (this.type === 'edit') {
+
+      }
+      this.close()
     }
   }
 }
