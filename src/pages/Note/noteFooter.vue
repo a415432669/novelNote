@@ -67,7 +67,11 @@ export default {
   methods: {
     changeType (noteType) {
       this.$store.commit('updateNoteType', noteType)
-      this.$store.dispatch('getCategory')
+      const categoryList = this.category.data.filter((value, index) => {
+        return value.type === noteType
+      })
+      this.$store.commit('updateCurrent', categoryList.length > 0 ? categoryList[0] : null)
+      this.$store.dispatch('getNotes')
     }
   }
 }

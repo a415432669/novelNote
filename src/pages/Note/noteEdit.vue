@@ -72,8 +72,7 @@
       </div>
     </header>
     <div class="editor-container">
-      <textarea class="editor" v-model="content">
-      </textarea>
+      <textarea class="editor" @input="updateContent">{{content}}</textarea>
     </div>
   </div>
 </transition>
@@ -98,29 +97,33 @@ export default {
   },
   computed: {
     ...mapGetters({
-      category: 'getCategory'
+      category: 'getCategory',
+      content: 'getNoteContent'
     })
   },
   data () {
     return {
-      content: ''
     }
   },
   mounted () {
   },
   methods: {
     close () {
-      this.content = ''
+      this.$store.commit('updateNoteContent', '')
       this.$emit('update:visible', false)
     },
-    updateContent () {
-      this.$refs.content.innerHTML.replace(/<br>/g, '\n')
+    updateContent (e) {
+      this.$store.commit('updateNoteContent', e.target.value)
     },
     async submit () {
+      if (this.content === '') {
+        this.$store.dispatch('toast', '请输入内容')
+        return false
+      }
       if (this.type === 'add') {
         await this.$store.dispatch('addNote', this.content)
       } else if (this.type === 'edit') {
-
+        await this.$store.dispatch('editNote', this.content)
       }
       this.close()
     }

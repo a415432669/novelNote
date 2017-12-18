@@ -8,6 +8,8 @@ const state = {
     data: []
   },
   note: {
+    currentId: 0,
+    currentContent: '',
     data: []
   }
 }
@@ -22,6 +24,9 @@ const getters = {
   },
   getNotes (state) {
     return state.note
+  },
+  getNoteContent (state) {
+    return state.note.currentContent
   }
 }
 
@@ -43,24 +48,29 @@ const actions = {
         })
     })
   },
-  getCategory ({commit, state, dispatch}) {
+  getCategory ({commit, state, dispatch, rootState: {route}}) {
     const category = api.store('category')
+    const bookId = parseInt(route.params.id, 10)
     category
-      .index('byType')
-      .get(state.category.type, (e, data) => {
+      .index('byBook')
+      .get(bookId, (e, data) => {
         commit('updateCategory', data)
         if (data.length > 0) {
           commit('updateCurrent', data[0])
-          dispatch('getNotes')
+        } else {
+          commit('updateCurrent', null)
         }
+        dispatch('getNotes')
       })
   },
-  addCategory ({commit, state, dispatch}, title) {
+  addCategory ({commit, state, dispatch, rootState: {route}}, title) {
     return new Promise((resolve, reject) => {
       const category = api.store('category')
+      const bookId = parseInt(route.params.id, 10)
       return category.put({
         title,
-        type: state.category.type
+        type: state.category.type,
+        bookId
       }, (e, id) => {
         if (e) {
           reject(e)
@@ -79,6 +89,10 @@ const actions = {
     })
   },
   getNotes ({commit, state}) {
+    if (state.category.current === null) {
+      commit('updateNotes', [])
+      return false
+    }
     const notes = api.store('notes')
     notes
       .index('byCate')
@@ -86,10 +100,11 @@ const actions = {
         commit('updateNotes', data)
       })
   },
-  addNote ({commit, state, dispatch}, content) {
+  addNote ({commit, state, dispatch}) {
     return new Promise((resolve, reject) => {
       const notes = api.store('notes')
       const catId = state.category.current.id
+      const content = state.note.currentContent
       notes.put({
         catId,
         content
@@ -99,6 +114,25 @@ const actions = {
         }
         dispatch('getNotes')
         resolve(id)
+      })
+    })
+  },
+  editNote ({commit, state, dispatch}) {
+    return new Promise((resolve, reject) => {
+      const notes = api.store('notes')
+      const id = state.note.currentId
+      const content = state.note.currentContent
+      const catId = state.category.current.id
+      console.log(id)
+      notes.put(id, {
+        catId,
+        content
+      }, e => {
+        if (e) {
+          return reject(e)
+        }
+        dispatch('getNotes')
+        resolve()
       })
     })
   }
@@ -122,6 +156,12 @@ const mutations = {
   },
   updateNotes (state, data) {
     state.note.data = data
+  },
+  updateNoteContent (state, content) {
+    state.note.currentContent = content
+  },
+  updateNoteId (state, id) {
+    state.note.currentId = id
   }
 }
 export default {

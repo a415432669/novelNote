@@ -1,6 +1,4 @@
 <style lang="postcss" scoped>
-
-
 .content{
   position: absolute;
   top: 2.75rem;
@@ -24,6 +22,8 @@
 .main{
   flex: 1;
   padding: .4rem;
+  overflow-y:scroll;
+  padding-bottom: 4rem;
 }
 .note-item{
   background: #fff;
@@ -34,6 +34,7 @@
   font-size: .85rem;
   border: solid 1px #ddd;
   margin-bottom: .4rem;
+  min-height: 4rem;
 }
 .note-add .w-icon{
   width: 1.7rem;
@@ -76,16 +77,20 @@
     <aside class="side">
       <ul>
         <li
-          v-for="(item, index) in category.data"
+          v-for="item  in category.data"
           :key="item.id"
-          :class="{active: category.current.id === item.id}"
+          v-show = "category.type === item.type"
+          :class="{active: category.current && category.current.id === item.id}"
           @click="selectCate(item)">
           {{item.title}}
         </li>
       </ul>
     </aside>
     <div class="main">
-      <div class="note-item" v-for= "(item,index) in notes.data" :key="item.id">
+      <div class="note-item"
+        v-for= "item in notes.data"
+        :key="item.id"
+        @click="editNote(item)">
         <div class="w-content" v-html="htmlFormate(item.content)">
         </div>
       </div>
@@ -131,6 +136,7 @@ export default {
     }
   },
   async mounted () {
+    this.$store.commit('updateNoteType', 0)
     const detail = await this.$store.dispatch('getDetail')
     if (detail === undefined) {
       this.$router.push({name: 'Home'})
@@ -148,6 +154,12 @@ export default {
     },
     htmlFormate (html) {
       return html.replace(/\n/g, '<br />')
+    },
+    editNote ({id, content}) {
+      this.editType = 'edit'
+      this.$store.commit('updateNoteId', id)
+      this.$store.commit('updateNoteContent', content)
+      this.editDialog = true
     }
   },
   components: {
