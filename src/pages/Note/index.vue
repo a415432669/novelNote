@@ -26,13 +26,13 @@
   padding-bottom: 4rem;
 }
 .note-item{
-  background: #fff;
+  background: #fbf3ea;
   width: 100%;
   font: normal 14px verdana;
   line-height: 1.5;
   padding: .4rem .4rem;
   font-size: .85rem;
-  border: solid 1px #ddd;
+  box-shadow: 0 .2rem .25rem rgba(0, 0, 0, .1);
   margin-bottom: .4rem;
   min-height: 4rem;
 }

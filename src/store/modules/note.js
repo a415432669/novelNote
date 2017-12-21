@@ -123,7 +123,6 @@ const actions = {
       const id = state.note.currentId
       const content = state.note.currentContent
       const catId = state.category.current.id
-      console.log(id)
       notes.put(id, {
         catId,
         content
