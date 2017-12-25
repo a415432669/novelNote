@@ -9,6 +9,13 @@
     border-radius: .2rem;
     box-shadow: 0 .1rem .15rem rgba(0,0,0,.2);
   }
+  .note-content .link{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
   .note-content .p-date{
     font-size: .75rem;
     padding-left: 3rem;
@@ -58,8 +65,10 @@
         <div class="note-content">
           <div class="p-date">{{item.date|momentTime}}</div>
           <div class="p-title">
-            <router-link :to="{name:'Note', params:{id:item.id}}">{{item.title}}</router-link>
+           {{item.title}}
           </div>
+          <router-link class="link" :to="{name:'Note', params:{id:item.id}}">
+          </router-link>
           <a class="del">
             <my-icon icon="close"></my-icon>
           </a>
