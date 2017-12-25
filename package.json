@@ -14,6 +14,7 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    "lodash.merge": "^4.6.0",
     "moment": "^2.19.2",
     "treo": "^0.5.1",
     "vue": "^2.5.2",

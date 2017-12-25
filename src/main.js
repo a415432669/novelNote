@@ -7,9 +7,11 @@ import store from './store'
 import router from './router'
 import * as filters from './filters'
 
-import {MyHeader, MyIcon} from '@components'
+import {MyHeader, MyIcon, VueConfirm} from '@components'
 
 Vue.config.productionTip = false
+
+Vue.use(VueConfirm)
 
 Vue.component('my-header', MyHeader)
 Vue.component('my-icon', MyIcon)

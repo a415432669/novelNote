@@ -69,7 +69,7 @@
           </div>
           <router-link class="link" :to="{name:'Note', params:{id:item.id}}">
           </router-link>
-          <a class="del">
+          <a class="del" @click = 'delBook(item.id)'>
             <my-icon icon="close"></my-icon>
           </a>
         </div>
@@ -101,6 +101,15 @@ export default {
   methods: {
     init () {
       this.$store.dispatch('getBooks')
+    },
+    delBook (id) {
+      this.$confirm('欢迎使用 wc-messagebox')
+        .then(() => {
+          console.log('你点击了确定')
+        })
+        .catch(() => {
+          console.log('你点击了取消')
+        })
     }
   },
   components: {
