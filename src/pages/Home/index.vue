@@ -103,7 +103,7 @@ export default {
       this.$store.dispatch('getBooks')
     },
     delBook (id) {
-      this.$confirm('欢迎使用 wc-messagebox')
+      this.$confirm('确定要删除吗')
         .then(() => {
           console.log('你点击了确定')
         })

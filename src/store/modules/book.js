@@ -11,34 +11,46 @@ const getters = {
 }
 
 const actions = {
-  getBooks ({commit, state}) {
-    const books = api.store('books')
-    books.all(function (e, data) {
-      if (data !== null) {
-        commit('updateBooks', data)
-      }
-    })
+  async getBooks ({commit, state}) {
+    const data = await api.books.toArray()
+    commit('updateBooks', data)
   },
   addBook ({commit, state, dispatch}, title) {
-    return new Promise((resolve, reject) => {
-      const books = api.store('books')
+    // return new Promise((resolve, reject) => {
+    //   const books = api.store('books')
+    //   const date = new Date().getTime()
+    //   return books.put({
+    //     title,
+    //     date
+    //   }, (e, id) => {
+    //     if (e) {
+    //       reject(e)
+    //       return
+    //     }
+    //     commit('addBooks', {
+    //       id,
+    //       title,
+    //       date
+    //     })
+    //     resolve()
+    //   })
+    // })
+    return new Promise(async (resolve, reject) => {
       const date = new Date().getTime()
-      return books.put({
+      const id = await api.books.add({
         title,
         date
-      }, (e, id) => {
-        if (e) {
-          reject(e)
-          return
-        }
-        commit('addBooks', {
-          id,
-          title,
-          date
-        })
-        resolve()
       })
+      commit('addBooks', {
+        id,
+        title,
+        date
+      })
+      resolve()
     })
+  },
+  delBook ({commit, state, dispatch}, id) {
+
   }
 }
 

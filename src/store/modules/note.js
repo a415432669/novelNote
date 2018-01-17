@@ -32,107 +32,79 @@ const getters = {
 
 const actions = {
   getDetail ({commit, rootState: {route}}) {
-    return new Promise((resolve, reject) => {
-      const books = api.store('books')
+    return new Promise(async (resolve, reject) => {
       const id = parseInt(route.params.id, 10)
-      books
-        .get(id, (e, data) => {
-          if (e) {
-            reject(e)
-          }
-          if (data === undefined) {
-            resolve(undefined)
-          }
-          commit('updateDetail', data)
-          resolve(data)
-        })
+      const data = await api.books.get(id)
+      commit('updateDetail', data)
+      resolve(data)
     })
   },
-  getCategory ({commit, state, dispatch, rootState: {route}}) {
-    const category = api.store('category')
+  async getCategory ({commit, state, dispatch, rootState: {route}}) {
     const bookId = parseInt(route.params.id, 10)
-    category
-      .index('byBook')
-      .get(bookId, (e, data) => {
-        commit('updateCategory', data)
-        if (data.length > 0) {
-          commit('updateCurrent', data[0])
-        } else {
-          commit('updateCurrent', null)
-        }
-        dispatch('getNotes')
-      })
+    const data = await api.category
+      .where('bookId')
+      .equals(bookId)
+      .toArray()
+    commit('updateCategory', data)
+    if (data.length > 0) {
+      commit('updateCurrent', data[0])
+    } else {
+      commit('updateCurrent', null)
+    }
+    dispatch('getNotes')
   },
   addCategory ({commit, state, dispatch, rootState: {route}}, title) {
-    return new Promise((resolve, reject) => {
-      const category = api.store('category')
+    return new Promise(async (resolve, reject) => {
       const bookId = parseInt(route.params.id, 10)
-      return category.put({
+      const id = api.category.add({
         title,
         type: state.category.type,
         bookId
-      }, (e, id) => {
-        if (e) {
-          reject(e)
-          return
-        }
-        const data = {
-          id,
-          title,
-          type: state.category.type
-        }
-        resolve()
-        commit('updateCurrent', data)
-        commit('addCategory', data)
-        dispatch('getNotes')
       })
+      const data = {
+        id,
+        title,
+        type: state.category.type,
+        bookId
+      }
+      commit('updateCurrent', data)
+      commit('addCategory', data)
+      dispatch('getNotes')
+      resolve()
     })
   },
-  getNotes ({commit, state}) {
+  async getNotes ({commit, state}) {
     if (state.category.current === null) {
       commit('updateNotes', [])
       return false
     }
-    const notes = api.store('notes')
-    notes
-      .index('byCate')
-      .get(state.category.current.id, (e, data) => {
-        commit('updateNotes', data)
-      })
+    const cid = state.category.current.id
+    const data = await api.notes.where('catId').equals(cid).toArray()
+    commit('updateNotes', data)
   },
-  addNote ({commit, state, dispatch}) {
-    return new Promise((resolve, reject) => {
-      const notes = api.store('notes')
+  addNote ({commit, state, dispatch, rootState: {route}}) {
+    return new Promise(async (resolve, reject) => {
       const catId = state.category.current.id
       const content = state.note.currentContent
-      notes.put({
+      const bookId = parseInt(route.params.id, 10)
+      const id = api.notes.add({
         catId,
-        content
-      }, (e, id) => {
-        if (e) {
-          return reject(e)
-        }
-        dispatch('getNotes')
-        resolve(id)
+        content,
+        bookId
       })
+      dispatch('getNotes')
+      resolve(id)
     })
   },
   editNote ({commit, state, dispatch}) {
-    return new Promise((resolve, reject) => {
-      const notes = api.store('notes')
+    return new Promise(async (resolve, reject) => {
       const id = state.note.currentId
       const content = state.note.currentContent
-      const catId = state.category.current.id
-      notes.put(id, {
-        catId,
-        content
-      }, e => {
-        if (e) {
-          return reject(e)
-        }
+      const update = await api.notes.update(id, {content})
+      if (update) {
         dispatch('getNotes')
-        resolve()
-      })
+      }
+      resolve()
     })
   }
 }
