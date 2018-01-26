@@ -44,7 +44,9 @@ const actions = {
     const data = await api.category
       .where('bookId')
       .equals(bookId)
-      .toArray()
+      .filter(function (item) {
+        return item.type === state.category.type
+      }).toArray()
     commit('updateCategory', data)
     if (data.length > 0) {
       commit('updateCurrent', data[0])
@@ -53,10 +55,10 @@ const actions = {
     }
     dispatch('getNotes')
   },
-  addCategory ({commit, state, dispatch, rootState: {route}}, title) {
+  async addCategory ({commit, state, dispatch, rootState: {route}}, title) {
     return new Promise(async (resolve, reject) => {
       const bookId = parseInt(route.params.id, 10)
-      const id = api.category.add({
+      const id = await api.category.add({
         title,
         type: state.category.type,
         bookId
@@ -106,6 +108,23 @@ const actions = {
       }
       resolve()
     })
+  },
+  async delNote ({commit, state, dispatch}, id) {
+    await api.notes.delete(id)
+    dispatch('getNotes')
+  },
+  async delCate ({commit, state, dispatch}, id) {
+    await api.category.delete(id)
+    dispatch('getCategory')
+    if (state.category.data.length > 0) {
+      commit('updateCategory', state.category.data[0])
+    } else {
+      commit('updateCategory', null)
+    }
+    await api.notes
+      .where('catId')
+      .equals(id)
+      .delete()
   }
 }
 

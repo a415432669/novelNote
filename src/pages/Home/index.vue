@@ -69,7 +69,7 @@
           </div>
           <router-link class="link" :to="{name:'Note', params:{id:item.id}}">
           </router-link>
-          <a class="del" @click = 'delBook(item.id)'>
+          <a class="del" v-tap = 'delBook.bind(null, item.id)'>
             <my-icon icon="close"></my-icon>
           </a>
         </div>
@@ -105,7 +105,7 @@ export default {
     delBook (id) {
       this.$confirm('确定要删除吗')
         .then(() => {
-          console.log('你点击了确定')
+          this.$store.dispatch('delBook', id)
         })
         .catch(() => {
           console.log('你点击了取消')

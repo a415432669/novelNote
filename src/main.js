@@ -5,12 +5,13 @@ import App from './App'
 import { sync } from 'vuex-router-sync'
 import store from './store'
 import router from './router'
+import vueTouchAndHold from 'vue-tap-and-hold'
 import * as filters from './filters'
 
 import {MyHeader, MyIcon, VueConfirm} from '@components'
 
 Vue.config.productionTip = false
-
+Vue.use(vueTouchAndHold)
 Vue.use(VueConfirm)
 
 Vue.component('my-header', MyHeader)

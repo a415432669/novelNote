@@ -16,25 +16,6 @@ const actions = {
     commit('updateBooks', data)
   },
   addBook ({commit, state, dispatch}, title) {
-    // return new Promise((resolve, reject) => {
-    //   const books = api.store('books')
-    //   const date = new Date().getTime()
-    //   return books.put({
-    //     title,
-    //     date
-    //   }, (e, id) => {
-    //     if (e) {
-    //       reject(e)
-    //       return
-    //     }
-    //     commit('addBooks', {
-    //       id,
-    //       title,
-    //       date
-    //     })
-    //     resolve()
-    //   })
-    // })
     return new Promise(async (resolve, reject) => {
       const date = new Date().getTime()
       const id = await api.books.add({
@@ -49,8 +30,17 @@ const actions = {
       resolve()
     })
   },
-  delBook ({commit, state, dispatch}, id) {
-
+  async delBook ({commit, state, dispatch}, id) {
+    await api.books.delete(id)
+    dispatch('getBooks')
+    await api.category
+      .where('bookId')
+      .equals(id)
+      .delete()
+    await api.notes
+      .where('bookId')
+      .equals(id)
+      .delete()
   }
 }
 

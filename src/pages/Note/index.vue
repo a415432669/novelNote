@@ -21,7 +21,7 @@
 }
 .main{
   flex: 1;
-  padding: .4rem;
+  padding: .8rem;
   overflow-y:scroll;
   padding-bottom: 4rem;
 }
@@ -33,7 +33,7 @@
   padding: .4rem .4rem;
   font-size: .85rem;
   box-shadow: 0 .2rem .25rem rgba(0, 0, 0, .1);
-  margin-bottom: .4rem;
+  margin-bottom: .8rem;
   min-height: 4rem;
 }
 .note-add .w-icon{
@@ -76,24 +76,15 @@
   <div class="content">
     <aside class="side">
       <ul>
-        <li
-          v-for="item  in category.data"
+        <cate-item
+          v-for="item in category.data"
           :key="item.id"
-          v-show = "category.type === item.type"
-          :class="{active: category.current && category.current.id === item.id}"
-          @click="selectCate(item)">
-          {{item.title}}
-        </li>
+          :data="item"
+          ></cate-item>
       </ul>
     </aside>
     <div class="main">
-      <div class="note-item"
-        v-for= "item in notes.data"
-        :key="item.id"
-        @click="editNote(item)">
-        <div class="w-content" v-html="htmlFormate(item.content)">
-        </div>
-      </div>
+      <note-item v-for= "item in notes.data" :data="item" :key="item.id"></note-item>
       <div class="note-add" @click="addNote" v-if="category.data.length">
         <div class="w-icon">
           <my-icon icon="add" ></my-icon>
@@ -119,6 +110,8 @@ import { mapGetters } from 'vuex'
 import noteFooter from './noteFooter.vue'
 import cateAdd from './cateAdd.vue'
 import noteEdit from './noteEdit.vue'
+import noteItem from './noteItem.vue'
+import cateItem from './cateItem.vue'
 export default {
   computed: {
     ...mapGetters({
@@ -144,16 +137,9 @@ export default {
     this.$store.dispatch('getCategory')
   },
   methods: {
-    selectCate (cId) {
-      this.$store.commit('updateCurrent', cId)
-      this.$store.dispatch('getNotes')
-    },
     addNote () {
       this.editType = 'add'
       this.editDialog = true
-    },
-    htmlFormate (html) {
-      return html.replace(/\n/g, '<br />')
     },
     editNote ({id, content}) {
       this.editType = 'edit'
@@ -165,7 +151,9 @@ export default {
   components: {
     cateAdd,
     noteFooter,
-    noteEdit
+    noteEdit,
+    noteItem,
+    cateItem
   }
 }
 </script>
