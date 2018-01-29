@@ -16,7 +16,7 @@
   justify-content: space-between;
   height: 2.75rem;
   background-color: #7d726f;
-  box-shadow:0 .1rem .1rem rgba(0, 0, 0, .2);
+  border-bottom: 0.125rem solid #595c49;
   color: #fff;
   padding:0 .75rem;
 }

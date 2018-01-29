@@ -8,15 +8,16 @@
   .w-close{
     position: absolute;
     right: -.5rem;
-    top: -.5rem;
-    width: 1.2rem;
-    height: 1.2rem;
-    background-color: red;
+    bottom: -.5rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    background-color: #efdb78;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: .6rem;
-    box-shadow: 0 .15rem .15rem rgba(0,0,0,.2)
+    border-radius: 50%;
+    border: .125rem solid #595c49;
+    z-index: 100;
   }
   .w-close svg{
     fill: #fff;

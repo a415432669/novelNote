@@ -22,19 +22,24 @@
   padding: 1rem;
   background-color: #fff;
   border-radius: .1rem;
-  box-shadow: 0 0 .5rem rgba(0,0,0,.3);
+  border: 0.125rem solid #595c49;
   position: relative;
+  border-radius: .5rem;
+  background-color: #ffe09f
 }
 h2{
   font-size:1.25rem;
   text-align: center
 }
 .ipt{
-  display: block;
+   display: block;
   width: 100%;
   margin-top: 1rem;
   font-size: 1.2rem;
+  line-height: 2.4rem;
   border: none;
+  background-color: transparent;
+  border-bottom: .125rem solid #595c49;
 }
 .btn{
   display: block;
@@ -45,8 +50,11 @@ h2{
   font-size: 1rem;
   color: #fff;
   outline: none;
-  background-color: #d8b386;
-  border-radius: .2rem;
+  background-color: #fff;
+  font-weight: bold;
+  color: #595c49;
+  border: 0.125rem solid #595c49;
+  border-radius: .5rem;
 }
 .close{
   position: absolute;

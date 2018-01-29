@@ -9,12 +9,13 @@
 }
 .side{
   width: 6rem;
-  background-color: #fbf3ea;
+  background-color: #e2cc91;
+  border-right: .125rem solid #646754;
 }
 .side li{
-  font-size: .85rem;
+  font-size: 1rem;
   padding: .45rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: .125rem solid #646754;
 }
 .side li.active{
   color: red;
@@ -26,15 +27,34 @@
   padding-bottom: 4rem;
 }
 .note-item{
-  background: #fbf3ea;
+  position: relative;
+  background: #fff;
   width: 100%;
-  font: normal 14px verdana;
+  font-size: 1rem;
   line-height: 1.5;
-  padding: .4rem .4rem;
+  padding: 1.4rem .8rem .4rem;
   font-size: .85rem;
-  box-shadow: 0 .2rem .25rem rgba(0, 0, 0, .1);
+  border: .125rem solid #595c49;
   margin-bottom: .8rem;
-  min-height: 4rem;
+  min-height: 4.5rem;
+  border-radius: .5rem;
+  z-index: 10;
+}
+.note-item::before, .note-item::after{
+  content: "";
+  display: block;
+  position: absolute;
+  left: .3rem;
+  top: .3rem;
+  width: .8rem;
+  height: .8rem;
+  background-color: #fff;
+  border-radius: 50%;
+  border: 0.125rem solid #595c49;
+}
+.note-item::after{
+  left: auto;
+  right: .3rem;
 }
 .note-add .w-icon{
   width: 1.7rem;

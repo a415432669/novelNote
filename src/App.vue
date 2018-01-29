@@ -63,7 +63,7 @@ body {
     -webkit-text-size-adjust: none;
     -webkit-touch-callout: none;
     -webkit-overflow-scrolling: touch;
-     background-color: #eed9ba;
+     background-color: #e5dcbf;
 }
 
 

@@ -6,9 +6,6 @@
     width: 100%;
     background: rgba(0, 0, 0, .4);
     z-index: 998;
-    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", STHeiti, "Microsoft Yahei", Tahoma, Simsun, sans-serif;
-    -webkit-user-select: none;
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 .wc-popup {
     position: fixed;
@@ -19,8 +16,10 @@
     width: 16rem;
     -webkit-transform: translate3d(-50%, -50%, 0) scale(1.185);
     text-align: center;
-    color: #000;
+    color: #595c49;
     border-radius: .75rem;
+    border: .125rem solid #595c49;
+    background-color: #fff;
 }
 .wc-popup.wc-popup-in {
     display: block;
@@ -37,21 +36,6 @@
     border-radius: 13px 13px 0 0;
     background: rgba(255, 255, 255, .95);
 }
-.wc-popup-inner:after {
-    position: absolute;
-    z-index: 15;
-    top: auto;
-    right: auto;
-    bottom: 0;
-    left: 0;
-    display: block;
-    width: 100%;
-    height: 1px;
-    content: '';
-    transform: scaleY(.5);
-    transform-origin: 50% 100%;
-    background-color: rgba(0, 0, 0, .2);
-}
 .wc-popup-title {
     font-size: 1.1rem;
     font-weight: 500;
@@ -66,25 +50,26 @@
     position: relative;
     display: flex;
     height: 2.75rem;
-    justify-content: center;
+    justify-content:space-around;
 }
 .wc-popup-button {
+    display: inline-block;
     font-size: 1rem;
-    line-height: 2.75rem;
+    line-height: 2.0rem;
     position: relative;
     display: block;
     overflow: hidden;
     box-sizing: border-box;
     width: 100%;
-    height: 2.75rem;
-    padding: 0 .4rem;
-    text-align: center;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    color: #007aff;
+    height: 2.25rem;
+    border-radius: 1.25rem;
+    padding: 0 .8rem;
+    color: #595c49;
+    border:.125rem solid #595c49;
     background: rgba(255, 255, 255, .95);
-    letter-spacing: 0.5px;
     cursor: pointer;
+    margin: 0 1.2rem;
+    font-weight:bold;
 }
 .wc-popup-button:after {
     position: absolute;
@@ -101,21 +86,7 @@
     transform-origin: 100% 50%;
     background-color: rgba(0, 0, 0, .2);
 }
-.wc-popup-button:first-child {
-    border-radius: 0 0 0 0.8125rem;
-}
-.wc-popup-button:first-child:last-child {
-    border-radius: 0 0 0.8125rem 0.8125rem;
-}
-.wc-popup-button:last-child {
-    border-radius: 0 0 0.8125rem 0;
-}
-.wc-popup-button-bold {
-    font-weight: 600;
-}
-.wc-popup-button:last-child:after {
-    display: none;
-}
+
 .wc-enter {
     opacity: 0;
     .wc-popup {

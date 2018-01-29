@@ -15,13 +15,15 @@
 .footer-nav .item a {
   display: block;
   text-align: center;
-  background-color: #cd7b70;
+  background: #cb9573;
   color: #fff;
   line-height: 2.75rem;
   font-size: 1.25rem;
   height: 8.5rem;
   border-radius: 0.25rem;
-  box-shadow: 0 0 0.6rem rgba(0, 0, 0, 0.4);
+  border: .125rem solid #6f8070;
+  font-weight: bold;
+  color: #fff;
   transform: rotate(7deg) translateY(0);
 }
 .footer-nav .item.active a{

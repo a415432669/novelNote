@@ -5,9 +5,9 @@
   }
   .note-content{
     position: relative;
-    background-color: #f5f3f9;
-    border-radius: .2rem;
-    box-shadow: 0 .1rem .15rem rgba(0,0,0,.2);
+    background-color: #fedfa3;
+    border-radius: .5rem;
+    border: .125rem solid #6f8070
   }
   .note-content .link{
     position: absolute;
@@ -18,14 +18,13 @@
   }
   .note-content .p-date{
     font-size: .75rem;
-    padding-left: 3rem;
+    padding-left: 2rem;
     height: 1.8rem;
     line-height: 1.8rem;
-    border-bottom: 1px solid #eee;
     color: #666
   }
   .note-content .p-title{
-    padding-left: 3rem;
+    padding-left: 2rem;
     padding-top: .6rem;
     padding-bottom: .6rem;
     padding-right: .5rem;
@@ -38,10 +37,13 @@
   }
   .del{
     position: absolute;
-    width: 1rem;
-    height: 1rem;
-    right: .4rem;
-    top: .4rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    right: -.125rem;
+    top: -.125rem;
+    background-color: #fff;
+    border: .125rem solid #6f8070;
+     border-radius: .5rem;
   }
   .del .icon{
     width: 100%;
