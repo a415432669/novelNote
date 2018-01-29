@@ -116,6 +116,7 @@ const gestures = {
     const el = evt.target
     const now = Date.now()
     const touchTime = now - startTime
+    console.log(pos.start[0])
     const distance = utils.getDistance(pos.start[0], pos.move ? pos.move[0] : pos.start[0])
     clearTimeout(holdTimer)
     if (config.tapMaxDistance < distance) return false
