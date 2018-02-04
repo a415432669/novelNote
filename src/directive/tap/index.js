@@ -1,7 +1,6 @@
 /* eslint-disable */
 let touchStart = false
 let startTime = 0
-let startEvent = null
 let endEvent = null
 let pos = {
   start: null,
@@ -97,7 +96,7 @@ const utils = {
     return ev.touches ? ev.touches.length : 1
   },
   reset () {
-    startEvent = null
+    touchStart = false
     pos = {
       start: null,
       move: null,
@@ -116,7 +115,6 @@ const gestures = {
     const el = evt.target
     const now = Date.now()
     const touchTime = now - startTime
-    console.log(pos.start[0])
     const distance = utils.getDistance(pos.start[0], pos.move ? pos.move[0] : pos.start[0])
     clearTimeout(holdTimer)
     if (config.tapMaxDistance < distance) return false
@@ -160,7 +158,6 @@ const handlerOriginEvent = function (evt) {
         pos.start = utils.getPosOfEvent(evt)
       }
       startTime = Date.now()
-      startEvent = evt
       gestures.hold(evt)
       break
     case 'touchmove':

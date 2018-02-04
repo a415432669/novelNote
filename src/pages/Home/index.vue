@@ -50,19 +50,25 @@
     height: 100%;
     fill: #ccc;
   }
+  .tip{
+    font-size: .8rem;
+    color: rgb(136, 135, 135);
+    text-align: center;
+    padding: 1rem 0;
+  }
 </style>
 
 
 <template>
   <div class="page">
-    <my-header title="小说笔记">
+    <my-header title="推理笔记">
       <div slot="right">
         <a href="javascript:void(0)" @click="diologVisible=true">
           <my-icon icon="edit" ></my-icon>
         </a>
       </div>
     </my-header>
-    <div class="note-box">
+    <div class="note-box" >
       <div class="note-item" v-for="item in books" :key="item.id">
         <div class="note-content">
           <div class="p-date">{{item.date|momentTime}}</div>
@@ -76,6 +82,7 @@
           </a>
         </div>
       </div>
+      <div class="tip">请点击右上角添加笔记</div>
     </div>
     <book-add
       :visible.sync="diologVisible"
@@ -94,7 +101,8 @@ export default {
   },
   data () {
     return {
-      diologVisible: false
+      diologVisible: false,
+      empty: false
     }
   },
   mounted () {

@@ -5,7 +5,7 @@ import App from './App'
 import { sync } from 'vuex-router-sync'
 import store from './store'
 import router from './router'
-import vueTouchAndHold from './directive/tap'
+import vueTouchAndHold from 'vue-tap-and-hold'
 import * as filters from './filters'
 
 import {MyHeader, MyIcon, VueConfirm} from '@components'

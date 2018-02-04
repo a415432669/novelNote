@@ -75,7 +75,12 @@
   justify-content: center;
   width: 100%;
 }
-
+.tip{
+    font-size: .8rem;
+    color: rgb(136, 135, 135);
+    text-align: center;
+    padding: 1rem 0;
+  }
 </style>
 
 
@@ -109,6 +114,12 @@
         <div class="w-icon">
           <my-icon icon="add" ></my-icon>
         </div>
+      </div>
+      <div class="tip" v-if="category.data.length===0">
+        请点击右上角添加
+        <span v-if="category.type===0">人物</span>
+        <span v-if="category.type===1">事件</span>
+        <span v-if="category.type===2">推理</span>
       </div>
     </div>
   </div>
