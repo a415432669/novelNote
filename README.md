@@ -1,6 +1,10 @@
 # novel_note
 
-> A Vue.js project
+推理笔记，PWA应用。
+
+#Todo List
+
+- [ ] 笔记导入导出功能
 
 ## Build Setup
 
