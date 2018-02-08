@@ -2,6 +2,9 @@
 
 推理笔记，PWA应用。
 
+<img src="https://raw.githubusercontent.com/ciming/novelNote/master/cover.png" align="left" width="248" />
+<img src="https://raw.githubusercontent.com/ciming/novelNote/master/cover1.png"  width="248" />
+
 #Todo List
 
 - [ ] 笔记导入导出功能
