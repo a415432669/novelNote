@@ -267,5 +267,19 @@ main {
 .toast-enter, .toast-leave-active {
   opacity: 0;
 }
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: rgb(85, 84, 84); opacity:1;
+}
 
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: rgb(85, 84, 84);opacity:1;
+}
+
+input:-ms-input-placeholder{
+    color: rgb(85, 84, 84);opacity:1;
+}
+
+input::-webkit-input-placeholder{
+    color: rgb(85, 84, 84);opacity:1;
+}
 </style>

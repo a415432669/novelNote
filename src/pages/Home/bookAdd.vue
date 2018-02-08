@@ -76,8 +76,8 @@ h2{
 <transition name="fade">
   <div class="diolog" v-if="visible" @click="close">
     <div class="diolog-contnt" @click.stop>
-      <h2>增加书籍</h2>
-      <input type="text" placeholder="新增书籍笔记" class="ipt" v-model="novelTitle" >
+      <h2>增加笔记</h2>
+      <input type="text" placeholder="新增笔记" class="ipt" v-model="novelTitle" >
       <button class="btn" @click="submit">完成</button>
       <a href="javascript:void(0)" class="close" @click="close">
         <my-icon icon="close"></my-icon>

@@ -116,10 +116,7 @@
         </div>
       </div>
       <div class="tip" v-if="category.data.length===0">
-        请点击右上角添加
-        <span v-if="category.type===0">人物</span>
-        <span v-if="category.type===1">事件</span>
-        <span v-if="category.type===2">推理</span>
+        请点击右上角添加<span v-if="category.type===0">人物</span><span v-if="category.type===1">事件</span><span v-if="category.type===2">推理</span>
       </div>
     </div>
   </div>
